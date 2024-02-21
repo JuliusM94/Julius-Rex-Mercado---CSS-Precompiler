@@ -1,14 +1,22 @@
 /* This is the original example. You can take all css styles from here. */
 
+// Variables
+$font-family: Quando;
+$kulay: #787878;
+$font-size: 12px;
+$width: 90%;
+$padding-left: 50px;
+
 body {
-    font-family: Quando;
+    font-family: $font-family;
     font-size: 15px;
-    color: #787878;
+    color:$kulay;
 }
 img {
     max-width: 100%;
     height: auto;
 }
+
 p {
     margin-bottom: 25px;
     line-height: 1.6em;
@@ -22,38 +30,48 @@ a {
 a:hover {
     color: #999999;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin-top: 25px;
-    margin-bottom: 20px;
-    font-family: 'Josefin Sans', sans-serif;
-    font-weight: 400;
-    line-height: 1.3em;
-    word-wrap: break-word;
-    color: #111111;
-}
-h1 {
-    font-size: 37px;
-}
-h2 {
-    font-size: 31px;
-}
-h3 {
-    font-size: 26px;
-}
-h4 {
-    font-size: 21px;
-}
-h5 {
-    font-size: 18px;
-}
-h6 {
-    font-size: 15px;
-}
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//     margin-top: 25px;
+//     margin-bottom: 20px;
+//     font-family: 'Josefin Sans', sans-serif;
+//     font-weight: 400;
+//     line-height: 1.3em;
+//     word-wrap: break-word;
+//     color: #111111;
+// }
+// h1 {
+//     font-size: 37px;
+// }
+// h2 {
+//     font-size: 31px;
+// }
+// h3 {
+//     font-size: 26px;
+// }
+// h4 {
+//     font-size: 21px;
+// }
+// h5 {
+//     font-size: 18px;
+// }
+// h6 {
+//     font-size: 15px;
+// }
+
+// Nesting #1
+$heading-sizes: (
+  h1: 37px,
+  h2: 31px,
+  h3: 26px,
+  h4: 21px,
+  h5: 18px,
+  h6: 15px
+);
 
 
 .container {
@@ -78,19 +96,40 @@ header nav ul {
 
 
 /* posts */
+
 article {
     margin-bottom: 50px;
     display: flex;
     flex-wrap: wrap;
 }
+
+
 .image-part {
     margin-bottom: 10px;
 }
 
+// .post-title {
+//     margin-top: 0;
+// }
+// .post-title a {
+//     color: #324360;
+//     text-transform: uppercase;
+//     font-size: 26px;
+//     font-weight: 900;
+//     margin-top: 15px;
+//     margin-bottom: 15px;
+//     line-height: 1.3em;
+//     transition: all .3s ease;
+// }
+// .post-title a:hover {
+//     color: #35c4ce;
+// }
+
+// Nesting #2
 .post-title {
     margin-top: 0;
-}
-.post-title a {
+
+a {
     color: #324360;
     text-transform: uppercase;
     font-size: 26px;
@@ -99,9 +138,11 @@ article {
     margin-bottom: 15px;
     line-height: 1.3em;
     transition: all .3s ease;
-}
-.post-title a:hover {
+
+a:hover {
     color: #35c4ce;
+}
+}
 }
 
 
@@ -120,35 +161,85 @@ footer {
     color: #111111;
 }
 
-.footer-logo {
-    width: 200px;
-    margin: 20px auto;
+// Nesting #3
+footer {
+    padding: 30px 0;
     text-align: center;
-    vertical-align: middle;
+    background: #eaf2ff;
+    color: #989898;
+
+a {
+    color: #989898;
+
+ a:hover {
+    color: #111111;
 }
+}
+}
+
+// .footer-logo {
+//     width: 200px;
+//     margin: 20px auto;
+//     text-align: center;
+//     vertical-align: middle;
+// }
+
+// Mixin #1
+@mixin footerlogo($width: 200px, $margin: 20px auto, $text-align: center, $vertical-align: middle) {
+    width: $width;
+    margin: $margin;
+    text-align: $text-align;
+    vertical-align: $vertical-align;
+}
+
+.footer-logo {
+    @include footerlogo();
+  }
+  
+
+
+  
 .footer-social-links {
     padding: 20px 0;
     line-height: 2em;
 }
-.footer-social-links a {
+// .footer-social-links a {
+//     margin: 0 10px;
+//     font-size: 16px;
+//     letter-spacing: 1px;
+//     text-transform: uppercase;
+// }
+
+// Mixins #2
+@mixin social-links ($font-size: 16px, $letter-spacing: 1px) {
     margin: 0 10px;
-    font-size: 16px;
-    letter-spacing: 1px;
+    font-size: $font-size;
+    letter-spacing: $letter-spacing;
     text-transform: uppercase;
 }
+
+.footer-social-links a{
+    @include social-links();
+}
+
+
+
 .footer-social-links a span {
     display: none;
 }
 #footer-copyright {
     padding: 20px 0;
-    font-size: 12px;
+    font-size: $font-size;
     color: #989898;
 }
 
 
+
+
+
 @media only screen and (min-width: 650px) {
     .container {
-        width: 90%;
+        width: $width;
     }
 
     header nav {
@@ -228,33 +319,63 @@ footer {
     article {
         display: flex;
     }
+    // .image-part {
+    //     flex: 1;
+    //     overflow: hidden;
+    //     margin-bottom: 0;
+    // }
+    // .image-part img {
+    //     transition: transform 3.5s ease-in-out;
+    // }
+    // .image-part img:hover {
+    //     transform: scale(1.5,1.5);
+    // }
+
+    // Nesting #4
     .image-part {
         flex: 1;
         overflow: hidden;
         margin-bottom: 0;
-    }
-    .image-part img {
-        transition: transform 3.5s ease-in-out;
-    }
-    .image-part img:hover {
-        transform: scale(1.5,1.5);
-    }
+  
+        img {
+          transition: transform 3.5s ease-in-out;
+  
+          &:hover {
+            transform: scale(1.5);
+          }
+        }
+      }
+
+
     .content-part {
         flex: 1;
-        padding-left: 50px;
+        padding-left: $padding-left;
     }
 
 
+    // /* footer */
+    // .footer-social-links a {
+    //     margin: 0 28px;
+    // }
+    // .footer-social-links i {
+    //     margin-right: 5px;
+    // }
+    // .footer-social-links a span {
+    //     display: inline;
+    //     font-size: 11px;
+    // }
 
-    /* footer */
-    .footer-social-links a {
-        margin: 0 28px;
+    // Nesting #5
+  .footer-social-links a {
+    margin: 0 28px;
+
+    i {
+      margin-right: 5px;
     }
-    .footer-social-links i {
-        margin-right: 5px;
+
+    span {
+      display: inline;
+      font-size: 11px;
     }
-    .footer-social-links a span {
-        display: inline;
-        font-size: 11px;
-    }
+}
 }
